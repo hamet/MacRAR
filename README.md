@@ -2,7 +2,7 @@
 
 A WinRAR-style archive manager for macOS. Native AppKit, a single Swift source file, no dependencies and no Xcode project — just `swiftc` and system tools.
 
-![icon](MacRAR-icon.png)
+![icon](Screenshot.png)
 
 Classic WinRAR workflow on a Mac: toolbar with Add / Extract To / Test / View / Delete / Info, a file table with Name, Size, Packed, Type, Modified and CRC32 columns, folder navigation inside the archive with a `..` entry, search, sortable columns and a status bar.
 
