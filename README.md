@@ -45,6 +45,13 @@ Requires macOS 11+ and the Xcode Command Line Tools (`xcode-select --install`).
 
 This compiles `MacRAR.swift` straight into a proper `MacRAR.app` bundle with the icon and file-type associations for .zip, .7z, .rar and the tar family. Move the bundle to `/Applications`, then right-click any archive → Open With → MacRAR (tick "Always Open With" if you want it as the default).
 
+To make MacRAR the system-wide default for archives in one go:
+
+```sh
+./set-default-handler.sh              # zip, 7z, rar
+./set-default-handler.sh --with-tar   # plus the tar family (also grabs plain .gz/.bz2)
+```
+
 For a quick unbundled build:
 
 ```sh
@@ -53,6 +60,17 @@ swiftc -O -o MacRAR MacRAR.swift
 ```
 
 Note that only the `.app` bundle gets Finder integration — a bare binary launched by double-click opens Terminal, which is how macOS treats plain executables.
+
+## Notes & limitations
+
+- AES-encrypted ZIPs list fine but won't extract — the system `unzip` only handles classic ZipCrypto. Repack as encrypted 7z instead, it's stronger anyway.
+- For 7z, per-file packed sizes are often empty: 7z groups files into solid blocks and only reports the block size. The Info dialog uses the on-disk archive size for the ratio instead.
+- Adding to a solid RAR archive, and any add/delete on tar.gz/tar.bz2, involves repacking and is proportionally slow on large archives — that's the nature of the formats, not a bug.
+- The app is signed ad-hoc. Gatekeeper may complain the first time you open a *downloaded* archive by double-click; either use ⌘O once, or leave the "Remove quarantine attribute" preference on and it won't recur for that file.
+
+## License
+
+MIT
 
 ## Notes & limitations
 
